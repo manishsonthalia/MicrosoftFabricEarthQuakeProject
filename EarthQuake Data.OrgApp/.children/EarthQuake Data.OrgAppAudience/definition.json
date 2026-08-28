@@ -1,0 +1,15 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/orgappaudience/definition/orgAppAudienceDefinition/1.0.0/schema.json",
+  "settings": {
+    "hasAccessToHiddenContent": false,
+    "tabOrder": 0
+  },
+  "parentAppId": "1b714237-448a-832b-4d05-d140d11ff898",
+  "elementReferences": [
+    {
+      "elementId": "17b68aa1-51da-47ba-850c-c472389501cc",
+      "itemType": "Report",
+      "itemLogicalId": "7c4563f5-95f1-884b-4dc6-ddcbf6e9cfec"
+    }
+  ]
+}

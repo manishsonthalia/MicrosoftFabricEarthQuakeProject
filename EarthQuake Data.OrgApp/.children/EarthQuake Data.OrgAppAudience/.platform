@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "OrgAppAudience",
+    "displayName": "EarthQuake Data"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "872be96c-9696-95e8-43f3-ba2d8a0dbef5"
+  }
+}

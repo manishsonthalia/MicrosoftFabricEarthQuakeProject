@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "Notebook",
+    "displayName": "02 Worldwide Earthquake Events API - Silver Layer Processing"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "555e8538-2579-8876-43d3-4000bba6e6b8"
+  }
+}

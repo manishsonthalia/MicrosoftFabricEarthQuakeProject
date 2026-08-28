@@ -1,0 +1,139 @@
+table earthquake_events_gold
+	lineageTag: 7f644b35-44af-4945-ab6a-0e7e0809f6aa
+
+	column id
+		dataType: string
+		lineageTag: 3a368e1f-0c92-49d8-97f3-278f76b62373
+		summarizeBy: none
+		sourceColumn: id
+
+		annotation SummarizationSetBy = Automatic
+
+	column longitude
+		dataType: double
+		lineageTag: ded3b727-3ed2-49c9-946c-372843120ba5
+		summarizeBy: sum
+		sourceColumn: longitude
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column latitude
+		dataType: double
+		lineageTag: 3d6aad73-8298-4143-84d0-45ff2e99ccb3
+		summarizeBy: sum
+		sourceColumn: latitude
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column elevation
+		dataType: double
+		lineageTag: 30656f12-1211-4c46-ab1f-8266fca016a6
+		summarizeBy: sum
+		sourceColumn: elevation
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column title
+		dataType: string
+		lineageTag: ae48b3aa-afd6-489b-976c-c95bd43f9ba9
+		summarizeBy: none
+		sourceColumn: title
+
+		annotation SummarizationSetBy = Automatic
+
+	column place_description
+		dataType: string
+		lineageTag: 3af7e213-c499-4d22-93d8-d191e2e414c9
+		summarizeBy: none
+		sourceColumn: place_description
+
+		annotation SummarizationSetBy = Automatic
+
+	column sig
+		dataType: int64
+		formatString: 0
+		lineageTag: 264ec50b-0fcb-40a5-b428-ef709fbd08f9
+		summarizeBy: sum
+		sourceColumn: sig
+
+		annotation SummarizationSetBy = Automatic
+
+	column mag
+		dataType: double
+		lineageTag: bb7df939-22f5-4360-b4df-e16e99057fb4
+		summarizeBy: sum
+		sourceColumn: mag
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column magType
+		dataType: string
+		lineageTag: 0b746b64-af85-4393-b3ba-41ea24c97e56
+		summarizeBy: none
+		sourceColumn: magType
+
+		annotation SummarizationSetBy = Automatic
+
+	column time
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 2e66f76f-d1d0-476f-85a9-a83d3e41ffb2
+		summarizeBy: none
+		sourceColumn: time
+
+		variation Variation
+			isDefault
+			relationship: cbf136b1-495c-461a-bb24-6a598a6a6be8
+			defaultHierarchy: LocalDateTable_b2566622-ca53-49d8-920b-1343ca854db2.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+	column updated
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: e31792bd-a055-4baf-99fe-0b428ce97062
+		summarizeBy: none
+		sourceColumn: updated
+
+		variation Variation
+			isDefault
+			relationship: d77fc54b-6264-448a-a58a-7fafc930a2cd
+			defaultHierarchy: LocalDateTable_dfe343bd-6b01-4382-8f82-06fc3ba73f12.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+	column country_code
+		dataType: string
+		lineageTag: 8874cd25-310e-47f2-ac9a-e89bcf483038
+		summarizeBy: none
+		sourceColumn: country_code
+
+		annotation SummarizationSetBy = Automatic
+
+	column sig_class
+		dataType: string
+		lineageTag: 0544b77a-f13d-464c-b350-071a9ebb9ca4
+		summarizeBy: none
+		sourceColumn: sig_class
+
+		annotation SummarizationSetBy = Automatic
+
+	partition earthquake_events_gold = m
+		mode: import
+		source =
+				let
+				  Source = Sql.Database("slosjpl5nypevkm7aurnuaora4-76gcu7kpakdurkfcarou2h42zi.datawarehouse.fabric.microsoft.com", "earthquake_lh2"),
+				  #"Navigation 1" = Source{[Schema = "dbo", Item = "earthquake_events_gold"]}[Data]
+				in
+				  #"Navigation 1"
+
+	annotation PBI_ResultType = Table
+

@@ -1,0 +1,10 @@
+relationship cbf136b1-495c-461a-bb24-6a598a6a6be8
+	joinOnDateBehavior: datePartOnly
+	fromColumn: earthquake_events_gold.time
+	toColumn: LocalDateTable_b2566622-ca53-49d8-920b-1343ca854db2.Date
+
+relationship d77fc54b-6264-448a-a58a-7fafc930a2cd
+	joinOnDateBehavior: datePartOnly
+	fromColumn: earthquake_events_gold.updated
+	toColumn: LocalDateTable_dfe343bd-6b01-4382-8f82-06fc3ba73f12.Date
+
