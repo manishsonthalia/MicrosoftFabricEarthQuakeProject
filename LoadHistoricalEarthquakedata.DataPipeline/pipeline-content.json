@@ -2,159 +2,38 @@
   "properties": {
     "activities": [
       {
-        "type": "ForEach",
+        "type": "SetVariable",
         "typeProperties": {
-          "batchCount": 1,
-          "items": {
-            "value": "@range(0,3)",
-            "type": "Expression"
-          },
-          "activities": [
-            {
-              "type": "SetVariable",
-              "typeProperties": {
-                "variableName": "start_date",
-                "value": {
-                  "value": "@formatDateTime(addDays(formatDateTime('2023-01-01', 'yyyy-MM-dd'), item()), 'yyyy-MM-dd')",
-                  "type": "Expression"
-                }
-              },
-              "policy": {
-                "secureInput": false,
-                "secureOutput": false
-              },
-              "name": "Set StartDate",
-              "dependsOn": []
-            },
-            {
-              "type": "SetVariable",
-              "typeProperties": {
-                "variableName": "end_date",
-                "value": {
-                  "value": "@formatDateTime(addDays(formatDateTime('2023-01-01', 'yyyy-MM-dd'), add(item(),1)), 'yyyy-MM-dd')",
-                  "type": "Expression"
-                }
-              },
-              "policy": {
-                "secureInput": false,
-                "secureOutput": false
-              },
-              "name": "Set End Date",
-              "dependsOn": [
-                {
-                  "activity": "Set StartDate",
-                  "dependencyConditions": [
-                    "Succeeded"
-                  ]
-                }
-              ]
-            },
-            {
-              "type": "TridentNotebook",
-              "typeProperties": {
-                "notebookId": "da1648bd-2eae-b84c-4255-114e0a6b8065",
-                "workspaceId": "00000000-0000-0000-0000-000000000000",
-                "parameters": {
-                  "start_date": {
-                    "value": {
-                      "value": "@variables('start_date')",
-                      "type": "Expression"
-                    },
-                    "type": "string"
-                  },
-                  "end_date": {
-                    "value": {
-                      "value": "@variables('end_date')",
-                      "type": "Expression"
-                    },
-                    "type": "string"
-                  }
-                }
-              },
-              "policy": {
-                "timeout": "0.12:00:00",
-                "retry": 0,
-                "retryIntervalInSeconds": 30,
-                "secureInput": false,
-                "secureOutput": false
-              },
-              "name": "Bronze Notebook",
-              "dependsOn": [
-                {
-                  "activity": "Set End Date",
-                  "dependencyConditions": [
-                    "Succeeded"
-                  ]
-                }
-              ]
-            },
-            {
-              "type": "TridentNotebook",
-              "typeProperties": {
-                "notebookId": "555e8538-2579-8876-43d3-4000bba6e6b8",
-                "workspaceId": "00000000-0000-0000-0000-000000000000",
-                "parameters": {
-                  "start_date": {
-                    "value": {
-                      "value": "@variables('start_date')",
-                      "type": "Expression"
-                    },
-                    "type": "string"
-                  }
-                }
-              },
-              "policy": {
-                "timeout": "0.12:00:00",
-                "retry": 0,
-                "retryIntervalInSeconds": 30,
-                "secureInput": false,
-                "secureOutput": false
-              },
-              "name": "Silver Notebook",
-              "dependsOn": [
-                {
-                  "activity": "Bronze Notebook",
-                  "dependencyConditions": [
-                    "Succeeded"
-                  ]
-                }
-              ]
-            },
-            {
-              "type": "TridentNotebook",
-              "typeProperties": {
-                "notebookId": "5a40f291-9c45-95cb-4548-5c6a54bd931d",
-                "workspaceId": "00000000-0000-0000-0000-000000000000",
-                "parameters": {
-                  "start_date": {
-                    "value": {
-                      "value": "@variables('start_date')",
-                      "type": "Expression"
-                    },
-                    "type": "string"
-                  }
-                }
-              },
-              "policy": {
-                "timeout": "0.12:00:00",
-                "retry": 0,
-                "retryIntervalInSeconds": 30,
-                "secureInput": false,
-                "secureOutput": false
-              },
-              "name": "Gold Notebook",
-              "dependsOn": [
-                {
-                  "activity": "Silver Notebook",
-                  "dependencyConditions": [
-                    "Succeeded"
-                  ]
-                }
-              ]
-            }
-          ]
+          "variableName": "seed_date",
+          "value": "'2026-08-25'"
         },
-        "name": "TopLoop",
+        "policy": {
+          "secureInput": false,
+          "secureOutput": false
+        },
+        "name": "Set Seed Date",
+        "dependsOn": []
+      },
+      {
+        "type": "TridentNotebook",
+        "typeProperties": {
+          "notebookId": "e1e936f9-8d8b-813a-466f-cdd1a5230e72",
+          "workspaceId": "00000000-0000-0000-0000-000000000000",
+          "parameters": {
+            "start_date": {
+              "value": "variables{start_date}",
+              "type": "string"
+            }
+          }
+        },
+        "policy": {
+          "timeout": "0.12:00:00",
+          "retry": 0,
+          "retryIntervalInSeconds": 30,
+          "secureInput": false,
+          "secureOutput": false
+        },
+        "name": "Historical Load Bronze",
         "dependsOn": [
           {
             "activity": "Set Seed Date",
@@ -165,17 +44,80 @@
         ]
       },
       {
-        "type": "SetVariable",
+        "type": "TridentNotebook",
         "typeProperties": {
-          "variableName": "seed_date",
-          "value": "'2023-01-01'"
+          "notebookId": "a99596ba-3488-85ec-4dbf-b878cc39a531",
+          "workspaceId": "00000000-0000-0000-0000-000000000000"
         },
         "policy": {
+          "timeout": "0.12:00:00",
+          "retry": 0,
+          "retryIntervalInSeconds": 30,
           "secureInput": false,
           "secureOutput": false
         },
-        "name": "Set Seed Date",
-        "dependsOn": []
+        "name": "Historical Load Silver",
+        "dependsOn": [
+          {
+            "activity": "Wait between Bronze and Silver",
+            "dependencyConditions": [
+              "Succeeded"
+            ]
+          }
+        ]
+      },
+      {
+        "type": "TridentNotebook",
+        "typeProperties": {
+          "notebookId": "78f2c0e0-acae-9b69-4344-85caf2fc7b53",
+          "workspaceId": "00000000-0000-0000-0000-000000000000"
+        },
+        "policy": {
+          "timeout": "0.12:00:00",
+          "retry": 0,
+          "retryIntervalInSeconds": 30,
+          "secureInput": false,
+          "secureOutput": false
+        },
+        "name": "Historical Load Gold",
+        "dependsOn": [
+          {
+            "activity": "Wait between Silver and Gold",
+            "dependencyConditions": [
+              "Succeeded"
+            ]
+          }
+        ]
+      },
+      {
+        "type": "Wait",
+        "typeProperties": {
+          "waitTimeInSeconds": 30
+        },
+        "name": "Wait between Bronze and Silver",
+        "dependsOn": [
+          {
+            "activity": "Historical Load Bronze",
+            "dependencyConditions": [
+              "Succeeded"
+            ]
+          }
+        ]
+      },
+      {
+        "type": "Wait",
+        "typeProperties": {
+          "waitTimeInSeconds": 30
+        },
+        "name": "Wait between Silver and Gold",
+        "dependsOn": [
+          {
+            "activity": "Historical Load Silver",
+            "dependencyConditions": [
+              "Succeeded"
+            ]
+          }
+        ]
       }
     ],
     "variables": {

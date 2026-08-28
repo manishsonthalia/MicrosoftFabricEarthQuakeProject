@@ -42,7 +42,7 @@ import json
 
 # CELL ********************
 
-start_date = date(2023, 1, 1)
+# start_date = date(2023, 1, 1)
 final_date = date.today()
 
 while start_date < final_date:
