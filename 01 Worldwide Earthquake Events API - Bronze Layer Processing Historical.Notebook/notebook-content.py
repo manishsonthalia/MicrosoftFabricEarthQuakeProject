@@ -29,7 +29,7 @@
 
 # CELL ********************
 
-from datetime import date, timedelta
+from datetime import date, timedelta, datetime
 import requests
 import json
 
@@ -43,7 +43,30 @@ import json
 # CELL ********************
 
 # start_date = date(2023, 1, 1)
-final_date = date.today()
+# final_date = date.today()
+
+start_date = datetime.strptime(start_date, "%Y-%m-%d").date()
+
+table_name = "earthquake_lh2.dbo.earthquake_events_silver"
+
+if not spark.catalog.tableExists(table_name):
+    final_date = date.today()
+else:
+    final_date = spark.sql(f"""
+        SELECT COALESCE(MIN(time), CURRENT_DATE()) AS min_date
+        FROM {table_name}
+    """).collect()[0]["min_date"]
+
+final_date = final_date.date()
+
+# METADATA ********************
+
+# META {
+# META   "language": "python",
+# META   "language_group": "synapse_pyspark"
+# META }
+
+# CELL ********************
 
 while start_date < final_date:
 
@@ -69,9 +92,9 @@ while start_date < final_date:
     if end_date > final_date:
         end_date = final_date
 
-    display(start_date)
-    display(end_date)
-    display(count)
+    # display(start_date)
+    # display(end_date)
+    # display(count)
 
     """
     Fetch earthquake data from USGS for the specified date range
@@ -109,6 +132,10 @@ while start_date < final_date:
 
     # Restart from where this window ended
     start_date = end_date
+
+# df = spark.sql("SELECT * FROM earthquake_lh2.dbo.earthquake_events_silver LIMIT 1000")
+# display(df)
+
 
 # METADATA ********************
 

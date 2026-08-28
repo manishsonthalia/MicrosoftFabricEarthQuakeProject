@@ -5,7 +5,7 @@
         "type": "SetVariable",
         "typeProperties": {
           "variableName": "seed_date",
-          "value": "'2026-08-25'"
+          "value": "2021-11-01"
         },
         "policy": {
           "secureInput": false,
@@ -21,7 +21,10 @@
           "workspaceId": "00000000-0000-0000-0000-000000000000",
           "parameters": {
             "start_date": {
-              "value": "variables{start_date}",
+              "value": {
+                "value": "@variables('seed_date')",
+                "type": "Expression"
+              },
               "type": "string"
             }
           }
