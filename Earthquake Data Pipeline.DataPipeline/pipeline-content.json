@@ -175,6 +175,33 @@
             ]
           }
         ]
+      },
+      {
+        "type": "RefreshSqlEndpoint",
+        "typeProperties": {
+          "workspaceId": "00000000-0000-0000-0000-000000000000",
+          "sqlEndpointId": "f3ff01ff-b8f3-4ebd-96f5-ad50117e887a",
+          "recreateTables": false
+        },
+        "externalReferences": {
+          "connection": "edf60b81-1e3a-44c1-95d7-cfd921fb57e7"
+        },
+        "policy": {
+          "timeout": "0.12:00:00",
+          "retry": 0,
+          "retryIntervalInSeconds": 30,
+          "secureInput": false,
+          "secureOutput": false
+        },
+        "name": "Refresh SQL analytics endpoint",
+        "dependsOn": [
+          {
+            "activity": "Gold Notebook",
+            "dependencyConditions": [
+              "Succeeded"
+            ]
+          }
+        ]
       }
     ],
     "variables": {
